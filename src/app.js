@@ -20,11 +20,11 @@ app.get("/repositories", (request, response) => {
 });
 
 app.post("/repositories", (request, response) => {
-  const { title, techs} = request.body;
+  const { title, url, techs} = request.body;
   const repositorie = {
     id: uuid(),
     title,
-    url: 'https://github.com/osterloh/GoStack_Level01_ChallengeNode',
+    url,
     techs,
     likes: 0,
   }
@@ -79,14 +79,14 @@ app.post("/repositories/:id/like", (request, response) => {
     return response.status(400).json({ error: 'Repositorie not found.'});
   }
 
-  result = repositories[repositorieIndex].likes;
+  likes = repositories[repositorieIndex].likes + 1;
 
   const repositorie = {
     id,
     title: repositories[repositorieIndex].title,
     url: repositories[repositorieIndex].url,
     techs: repositories[repositorieIndex].techs,
-    likes: result + 1,
+    likes,
   }
 
   repositories[repositorieIndex] = repositorie;
